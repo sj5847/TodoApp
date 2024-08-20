@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #container {
+            max-width: 400px;
+            margin: auto;
+        }
+        #input {
+            margin-bottom: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            padding: 5px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .delete-button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <h1>ToDo List</h1>
+        <main id="input">
+            <span>오늘 할일을 작성해 보세요</span>
+            <input type="text" id="todoInput" placeholder="할일을 입력하세요">
+            <button id="addButton">추가</button>
+            <span></span>
+        </main>
+        <ul id="todoList"></ul>
+    </div>
+    
+    <script>
+        let todoCount = 0; // 할일의 숫자 카운터
+        
+        document.getElementById('addButton').onclick = function() {
+            const input = document.getElementById('todoInput');
+            const todoText = input.value.trim();
+            
+            // 입력이 비어있지 않은 경우에만 추가
+            if (todoText) {
+                todoCount++; // 카운터 증가
+                const todoList = document.getElementById('todoList');
+                
+                // 새로운 리스트 항목 생성
+                const newItem = document.createElement('li');
+                newItem.textContent = `${todoCount}. ${todoText}`;
+                
+                // 삭제 버튼 생성
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'x';
+                deleteButton.className = 'delete-button';
+                
+                // 삭제 버튼 클릭 시 해당 항목 삭제
+                deleteButton.onclick = function() {
+                    todoList.removeChild(newItem);
+                };
+                
+                // 삭제 버튼을 리스트 항목에 추가
+                newItem.appendChild(deleteButton);
+                
+                // 리스트에 추가
+                todoList.appendChild(newItem);
+                
+                // 입력 필드 초기화
+                input.value = '';
+            } else {
+                alert('할 일을 입력하세요!');
+            }
+        };
+    </script>
+
+</body>
+</html>
